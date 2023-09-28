@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-function App() {
-  const [count, setCount] = useState(0)
+//  Import All Components and Pages
+import Register from './Pages/Register'
+import Login from './Pages/Login'
+import Recovery from './Pages/Recovery'
+import Reset from './Pages/Reset'
+import Profile from './Pages/Profile'
+import PageNotFound from './Pages/PageNotFound'
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Login></Login>
+    },
+    {
+        path: '/register',
+        element: <Register></Register>
+    },
+    {
+        path: '/recovery',
+        element: <Recovery></Recovery>
+    },
+    {
+        path: '/reset',
+        element: <Reset></Reset>
+    },
+    {
+        path: '/profile',
+        element: <Profile></Profile>
+    },
+    {
+        path: '*',
+        element: <PageNotFound></PageNotFound>
+    },
+]);
+
+export default function App() {
+    return (
+        <main>
+            <RouterProvider router={router}></RouterProvider>
+        </main>
+    )
 }
-
-export default App
