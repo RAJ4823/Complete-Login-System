@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
 import connect from './database/connection.js';
 import router from './router/rotue.js';
 
+// Set up global .env access
+dotenv.config();
+
 // Constants 
 const app = express();
-const PORT = '8080';
+const PORT = process.env.PORT || '8080';
 
 // Middlewares
 app.use(express.json());
