@@ -2,6 +2,8 @@ import UserModel from '../model/User.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import otpGenerator from 'otp-generator';
+import dotenv from 'dotenv';
+dotenv.config();
 
 /** POST: http://localhost:8080/api/register 
  * @param : {

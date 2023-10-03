@@ -1,18 +1,19 @@
-//! NOT WORKING, FIX ISSUESSSSSS
 import nodemailer from 'nodemailer';
 import Mailgen from 'mailgen';
+import createMail from './createMail.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
+    service: 'gmail',
     port: 587,
-    secure: false,
     auth: {
-        user: process.env.TEMP_EMAIL,
-        pass: process.env.TEMP_EMAIL_PASS,
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
     },
 });
 
-let MailGenerator = new Mailgen({
+const MailGenerator = new Mailgen({
     theme: 'default',
     product: {
         name: 'Mailgen',
@@ -30,21 +31,16 @@ let MailGenerator = new Mailgen({
 */
 export default async function sendMail(req, res) {
     try {
-        const { username, userEmail, text, subject } = req.body;
-
-        const emailHTML = MailGenerator.generate({
-            body: {
-                name: username,
-                intro: text || "Welcome to Superverse! We're very excited to have you on board.",
-                outro: "Need help, or have questions? Just reply to this email, we'd love to help.",
-            },
-        });
+        const { username, userEmail, subject, mailType, otp } = req.body;
+        const fromAddress = `Superverse 🚀 <${process.env.EMAIL}>`;
+        const toAddress = `${username} <${userEmail}>`;
+        const mailHtml = createMail(mailType, { username, otp });
 
         const email = {
-            from: process.env.TEMP_EMAIL,
-            to: userEmail,
-            subject: subject || 'Notice/Update for you from Superverse',
-            html: emailHTML,
+            from: fromAddress,
+            to: toAddress,
+            subject: subject,
+            html: mailHtml,
         };
 
         transporter
