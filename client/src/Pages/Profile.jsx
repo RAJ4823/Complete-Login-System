@@ -22,8 +22,7 @@ export default function Register() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = { ...values, profile: file || '' }
-      console.log(values)
+      console.log(file || '')
     },
   })
 

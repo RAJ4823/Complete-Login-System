@@ -114,7 +114,7 @@ export async function getUser(req, res) {
 
 /** PUT: http://localhost:8080/api/update-user 
  * @param: {
-        "id" : "<userid>"
+        "id" : "token"
     }
     body: {
         firstName: '',
@@ -147,7 +147,7 @@ export async function generateOTP(req, res) {
             specialChars: false,
         });
         req.app.locals.OTP = OTP;
-        res.status(201).send({ generatedOTP: OTP });
+        res.status(201).send({ OTP: OTP });
     } catch (err) {
         res.status(401).send(err);
     }

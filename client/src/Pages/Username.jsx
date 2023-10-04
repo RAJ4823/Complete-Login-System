@@ -3,17 +3,22 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { useFormik } from 'formik'
 import { usernameValidate } from '../Helper/Validate'
+import { useAuthStore } from '../Helper/store'
 import profileIcon from '/img/profile.png'
 import '../Styles/card.css'
 
 export default function Login() {
+  const setUsername = useAuthStore((state) => state.setUsername)
+  const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: { username: '' },
     validate: usernameValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      console.log(values)
+      setUsername(values.username)
+      navigate('/password')
     },
   })
 

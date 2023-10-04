@@ -1,9 +1,9 @@
 import axios from 'axios';
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 export async function authenticate(username) {
     try {
-        return axios.post('/api/authenticate', { username });
+        return await axios.post('/api/authenticate', { username });
     } catch (err) {
         return { error: 'Username not found...!', err };
     }

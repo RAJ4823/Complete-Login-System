@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen';
 import createMail from './createMail.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -10,14 +9,6 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASSWORD,
-    },
-});
-
-const MailGenerator = new Mailgen({
-    theme: 'default',
-    product: {
-        name: 'Mailgen',
-        link: 'https://mailgen.js/',
     },
 });
 
