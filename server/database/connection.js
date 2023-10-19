@@ -6,7 +6,7 @@ async function connect() {
     const mongoURI = await mongod.getUri();
 
     const db = await mongoose.connect(mongoURI);
-    console.log('Database Connceted');
+    console.log('Database Connected');
     return db;
 }
 

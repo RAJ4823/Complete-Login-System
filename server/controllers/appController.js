@@ -83,7 +83,6 @@ export async function login(req, res) {
                         return res.status(200).send({
                             msg: 'Login Successfull',
                             username: data.username,
-                            password: data.password,
                             token: token,
                         });
                     })

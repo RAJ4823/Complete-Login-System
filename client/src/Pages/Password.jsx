@@ -1,28 +1,38 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { useFormik } from 'formik'
 import { passwordValidate } from '../Helper/Validate'
 import useFetch from '../hooks/fetch'
 import { useAuthStore } from '../Helper/store'
+import { login } from '../Helper/helper'
 import profileIcon from '/img/profile.png'
 import '../Styles/card.css'
 
 export default function Password() {
   const { username } = useAuthStore((state) => state.auth)
   const [{ isLoading, error, status, apiData }] = useFetch(`user/${username}`)
-
-  useEffect(() => {
-    console.log(apiData, error)
-  }, [])
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: { password: '' },
     validate: passwordValidate,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values) => {
-      console.log(values)
+    onSubmit: async ({ password }) => {
+      let loginPromise = login({ username, password })
+
+      toast.promise(loginPromise, {
+        loading: 'Validating Password...',
+        success: <b>Login Successfully...!</b>,
+        error: <b>Password Not Match...!</b>,
+      })
+
+      loginPromise.then((res) => {
+        let { token } = res.data
+        localStorage.setItem('token', token)
+        navigate('/profile')
+      })
     },
   })
 

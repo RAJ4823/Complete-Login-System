@@ -1,5 +1,7 @@
 import UserModel from '../model/User.model.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Authenticate User by JWT Token
 export async function auth(req, res, callback) {

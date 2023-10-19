@@ -1,5 +1,15 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
+
+export async function getUsername() {
+    const token = localStorage.getItem('token');
+    if(!token) {
+        return Promise.reject("Cannot find the Token...!");
+    }
+    const decodedToken = jwt_decode(token);
+    return decodedToken;
+}
 
 export async function authenticate(username) {
     try {
@@ -12,11 +22,10 @@ export async function authenticate(username) {
 export async function register(credentials) {
     try {
         const { status } = await axios.post('/api/register', credentials);
-        const message = 'Registration Failed...!';
 
         // Send Mail if user registered Successfully
         if (status === 201) {
-            message = 'Registered Successfully!';
+            let message = 'Registered Successfully!';
             const mailData = {
                 username: credentials.username,
                 userEmail: credentials.email,
@@ -24,9 +33,10 @@ export async function register(credentials) {
                 mailType: 'registerMail',
             };
             await axios.post('/api/send-mail', mailData);
+            return Promise.resolve({ message });
+        } else {
+            throw new Error('Registration Failed...!');
         }
-
-        return Promise.resolve({ message });
     } catch (error) {
         return Promise.reject({ error });
     }
@@ -49,10 +59,11 @@ export async function getUser({ username }) {
         return { error: "Couldn't Fetch the user data...!", e };
     }
 }
+
 export async function updateUser(credentials) {
     try {
         const token = await localStorage.getItem('token');
-        const { data } = await axios.put('api/update-user', credentials, { Authorization: `Bearer ${token}` });
+        const { data } = await axios.put('api/update-user', credentials, { headers: { Authorization: `Bearer ${token}` } });
 
         return Promise.resolve({ data });
     } catch (e) {

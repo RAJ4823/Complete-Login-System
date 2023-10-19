@@ -1,28 +1,43 @@
 import { React, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { useFormik } from 'formik'
 import { profileValidation } from '../Helper/Validate'
+import { useNavigate } from 'react-router-dom'
+import { updateUser } from '../Helper/helper'
+import useFetch from '../hooks/fetch'
 import convertToBase64 from '../Helper/convert'
 import profileIcon from '/img/profile.png'
 import '../Styles/card.css'
 
 export default function Register() {
   const [file, setFile] = useState()
+  const [{ isLoading, error, status, apiData }] = useFetch()
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
-      firstName: 'Raj',
-      lastName: 'Patel',
-      email: 'the_247@superverse.com',
-      mobile: '',
-      address: '',
+      firstName: apiData?.firstName || '',
+      lastName: apiData?.lastName || '',
+      email: apiData?.email || '',
+      mobile: apiData?.mobile || '',
+      address: apiData?.address || '',
     },
+
+    enableReinitialize: true,
     validate: profileValidation,
     validateOnBlur: false,
     validateOnChange: false,
+
     onSubmit: async (values) => {
-      console.log(file || '')
+      values = { ...values, profile: file || apiData?.profile || '' }
+      const updatePromise = updateUser(values)
+
+      toast.promise(updatePromise, {
+        loading: 'Updating...',
+        success: <b>Profile Update Successfully...!</b>,
+        error: <b>Could Not Update...!</b>,
+      })
     },
   })
 
@@ -30,6 +45,26 @@ export default function Register() {
     const base64 = await convertToBase64(ele.target.files[0])
     setFile(base64)
   }
+
+  const onLogout = async () => {
+    localStorage.removeItem('token')
+    navigate('/')
+  }
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center">
+        <h1 className="text-2xl font-bold text-blue-500">Loading...</h1>
+      </div>
+    )
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center">
+        <h1 className="text-2xl font-bold text-red-500">Server Error</h1>
+        <p>{error}</p>
+      </div>
+    )
 
   return (
     <div className="container mx-auto">
@@ -48,7 +83,7 @@ export default function Register() {
             <div className="profile flex justify-center py-4">
               <label htmlFor="profile">
                 <img
-                  src={file || profileIcon}
+                  src={apiData?.profile || file || profileIcon}
                   className="profile-img w-40 cursor-pointer"
                   alt="avatar"
                 />
@@ -107,7 +142,7 @@ export default function Register() {
             <div className="text-center py-4">
               <span className="text-gray-500">
                 come back later?{' '}
-                <button to="/" className="text-red-500">
+                <button onClick={onLogout} className="text-red-500">
                   Logout
                 </button>
               </span>
