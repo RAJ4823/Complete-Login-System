@@ -1,13 +1,20 @@
 import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import dotenv from 'dotenv';
+dotenv.config();
 
 async function connect() {
-    const mongod = await MongoMemoryServer.create();
-    const mongoURI = await mongod.getUri();
-
-    const db = await mongoose.connect(mongoURI);
-    console.log('Database Connected');
-    return db;
+    try {
+        const mongoURI = process.env.ATLAS_URI;
+        const db = await mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+      
+        console.log('Connected Database Successfully');
+        return Promise.resolve(db);
+    } catch (error) {
+        return Promise.reject(error);
+    }
 }
 
 export default connect;

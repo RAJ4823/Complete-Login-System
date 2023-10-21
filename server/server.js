@@ -8,7 +8,7 @@ import router from './router/rotue.js';
 // Set up global .env access
 dotenv.config();
 
-// Constants 
+// Constants
 const app = express();
 const PORT = process.env.PORT || '8080';
 
@@ -37,5 +37,5 @@ connect()
         }
     })
     .catch((error) => {
-        console.log('Invalid database connection...!');
+        console.log('Invalid database connection...!', error);
     });
