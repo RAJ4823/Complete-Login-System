@@ -42,7 +42,8 @@ export default function Password() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col mt-20">
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <h1 className="text-2xl font-bold text-blue-500">Loading...</h1>
       </div>
     )
@@ -50,7 +51,8 @@ export default function Password() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col mt-20">
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <h1 className="text-2xl font-bold text-red-500">Server Error</h1>
         <p>{error?.message}</p>
       </div>
@@ -64,8 +66,8 @@ export default function Password() {
       <div className="flex justify-center items-center h-screen">
         <div className="glass" style={{ width: '50%' }}>
           <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">Reset</h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+            <h4 className="text-4xl font-bold">Reset</h4>
+            <span className="py-2 text-lg w-2/3 text-center text-gray-500">
               Enter new password.
             </span>
           </div>

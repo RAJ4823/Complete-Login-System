@@ -3,12 +3,13 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useAuthStore } from '../Helper/store'
 import { generateOTP, verifyOTP } from '../Helper/helper'
 import { useNavigate } from 'react-router-dom'
+import OtpInput from 'react-otp-input'
 
 import '../Styles/card.css'
 
 export default function Recovery() {
   const { username } = useAuthStore((state) => state.auth)
-  const [otp, setOtp] = useState()
+  const [otp, setOtp] = useState('')
   const [otpGenerated, setOtpGenerated] = useState(false)
   const navigate = useNavigate()
 
@@ -52,27 +53,35 @@ export default function Recovery() {
       <div className="flex justify-center items-center py-10">
         <div className="card glass">
           <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">Recovery</h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+            <h4 className="text-4xl font-bold">Recovery</h4>
+            <span className="py-2 text-lg w-2/3 text-center text-gray-500">
               {otpGenerated
                 ? 'Enter OTP to recover password.'
                 : 'Generate OTP and verify it to reset the password.'}
             </span>
           </div>
 
-          <form className="pt-10">
+          <form className="pt-5">
             <div className="textbox flex flex-col items-center justify-center gap-6">
               <span className="py-4 text-left text-gray-500">
                 {otpGenerated
                   ? 'Enter 6 Digit OTP sent to your email address.'
                   : 'The OTP will be sent to your registered email.'}
               </span>
-              <input
-                className="textbox-input"
-                type="text"
-                placeholder="OTP"
-                onChange={(e) => setOtp(e.target.value)}
-                disabled={!otpGenerated}
+              <OtpInput
+                value={otp}
+                onChange={setOtp}
+                numInputs={6}
+                separator={<span style={{ width: '8px' }}></span>}
+                renderInput={(props) => (
+                  <input
+                    {...props}
+                    className="otp-input"
+                    disabled={!otpGenerated}
+                  />
+                )}
+                isInputNum={true}
+                shouldAutoFocus={true}
               />
               {otpGenerated ? (
                 <button className="btn" onClick={onSubmit}>

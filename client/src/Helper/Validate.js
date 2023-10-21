@@ -4,10 +4,17 @@ import { authenticate } from './helper';
 export async function usernameValidate(values) {
     const errors = usernameVerify({}, values);
     if (values.username) {
-        const { status } = await authenticate(values.username);
-        if (status != 200) {
-            errors.exist = toast.error('User does not exists...!');
-        }
+        const authPromise = authenticate(values.username);
+        toast.promise(authPromise, {
+            loading: 'Fetching username...',
+            success: 'Username Found Successfully',
+            error: 'User does not exists...!',
+        });
+        authPromise.then(({ status }) => {
+            if (status != 200) {
+                errors.exist = 'User does not exists';
+            }
+        });
     }
     return errors;
 }

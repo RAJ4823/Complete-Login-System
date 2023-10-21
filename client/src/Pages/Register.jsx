@@ -49,8 +49,8 @@ export default function Register() {
       <div className="flex justify-center items-center h-full">
         <div className="glass">
           <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">Register</h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+            <h4 className="text-4xl font-bold">Register</h4>
+            <span className="py-1 text-lg w-2/3 text-center text-gray-500">
               Happy to join you!
             </span>
           </div>

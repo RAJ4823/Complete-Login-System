@@ -26,11 +26,11 @@ export default function Login() {
     <div className="container mx-auto">
       <Toaster position="top-center" reverseOrder={false} />
 
-      <div className="flex justify-center items-center py-10">
-        <div className="card glass">
+      <div className="flex justify-center items-center h-full p-5">
+        <div className="card glass h-full">
           <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">Hello Again!</h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+            <h4 className="text-4xl font-bold">Hello Again!</h4>
+            <span className="py-2 text-lg w-2/3 text-center text-gray-500">
               Explore more by connecting with us
             </span>
           </div>

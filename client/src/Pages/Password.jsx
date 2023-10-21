@@ -38,7 +38,8 @@ export default function Password() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col mt-20">
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <h1 className="text-2xl font-bold text-blue-500">Loading...</h1>
       </div>
     )
@@ -46,7 +47,8 @@ export default function Password() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col mt-20">
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <h1 className="text-2xl font-bold text-red-500">Server Error</h1>
         <p>{error?.message}</p>
       </div>
@@ -60,10 +62,10 @@ export default function Password() {
       <div className="flex justify-center items-center py-10">
         <div className="card glass">
           <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">
+            <h4 className="text-4xl font-bold">
               Hello {apiData?.firstName || apiData?.username}
             </h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+            <span className="py-4 text-lg w-2/3 text-center text-gray-500">
               Explore more by connecting with us
             </span>
           </div>

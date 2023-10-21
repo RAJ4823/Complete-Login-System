@@ -1,31 +1,98 @@
-.glass{
+.glass {
   background: rgba(255, 255, 255, 0.55);
   border-radius: 16px;
   box-shadow: 0 4px 30px #4747470b;
-  backdrop-filter: blur(7.1px);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  @apply h-max border-4 border-gray-50 shrink-0 h-3/4 w-[40%] rounded-3xl py-16 px-5 m-5 min-w-max;
+  width: max(50%, 600px);
+  min-width: max-content;
+  margin-top: 20px;
+  @apply h-max border-4 border-gray-50 shrink-0 rounded-3xl py-10 px-2;
 }
 
-.profile-img{
+.glass.profile {
+  margin-top: 0px;
+  width: min(80%, 700px) !important;
+  @apply py-5 px-2;
+}
+
+.profile-img {
   @apply border-4 border-gray-100 w-[135px] rounded-full shadow-lg cursor-pointer;
   @apply hover:border-gray-200;
 }
 
-.textbox-input{
-  @apply border-0 px-5 py-4 rounded-xl w-3/4 shadow-sm text-lg;
+.textbox-input {
+  @apply border-0 px-5 py-4 rounded-xl w-3/4 shadow-sm text-base;
   @apply focus:outline-none;
 }
 
-.btn{
-  background-color: rgb(74, 113, 255) !important;
-  @apply border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-50 text-xl shadow-sm text-center;
+.otp-input {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  width: 54px;
+  height: 54px;
+  color: blue;
+  font-weight: 700;
+  caret-color: blue;
+  border: 1px solid rgb(205, 205, 255);
+  width: 60px !important;
+  height: 60px !important;
+  font-size: 1.4rem !important;
+  margin: 0px 5px;
 }
 
-.btn:hover{
+.otp-input:focus {
+  border: 1px solid blue;
+  outline: none;
+}
+
+.btn {
+  background-color: rgb(74, 113, 255) !important;
+  @apply border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-50 text-lg shadow-sm text-center;
+}
+
+.btn:hover {
   background-color: #ff6a6a !important;
 }
 
-input[type='file']{
+input[type='file'] {
   display: none;
+}
+
+@media (max-width: 720px) {
+  .glass {
+    width: 95%;
+  }
+
+  .otp-input {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
+    margin: 0px 3px;
+  }
+}
+
+@media (max-width: 600px) {
+  .name {
+    flex-direction: column;
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    gap: 20px !important;
+  }
+
+  .textbox-input,
+  .btn {
+    width: 85% !important;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .otp-input {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 1.1rem !important;
+    margin: 0px 3px;
+  }
 }
