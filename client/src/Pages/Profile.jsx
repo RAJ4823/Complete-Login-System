@@ -51,20 +51,22 @@ export default function Register() {
     navigate('/')
   }
 
-  if (isLoading)
+  if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center flex-col">
         <h1 className="text-2xl font-bold text-blue-500">Loading...</h1>
       </div>
     )
+  }
 
-  if (error)
+  if (error) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center flex-col">
         <h1 className="text-2xl font-bold text-red-500">Server Error</h1>
-        <p>{error}</p>
+        <p>{error?.message}</p>
       </div>
     )
+  }
 
   return (
     <div className="container mx-auto">

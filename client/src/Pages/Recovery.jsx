@@ -1,8 +1,49 @@
-import React from 'react'
-import { Toaster } from 'react-hot-toast'
+import React, { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useAuthStore } from '../Helper/store'
+import { generateOTP, verifyOTP } from '../Helper/helper'
+import { useNavigate } from 'react-router-dom'
+
 import '../Styles/card.css'
 
 export default function Recovery() {
+  const { username } = useAuthStore((state) => state.auth)
+  const [otp, setOtp] = useState()
+  const [otpGenerated, setOtpGenerated] = useState(false)
+  const navigate = useNavigate()
+
+  const sendOTP = () => {
+    const sendPromise = generateOTP(username)
+    toast.promise(sendPromise, {
+      loading: 'Sending OTP...',
+      success: <b>OTP has been send to your email.</b>,
+      error: <b>Problem while generating OTP...!</b>,
+    })
+    sendPromise.then((OTP) => {
+      console.log(OTP)
+    })
+  }
+
+  const sendFirstOTP = (e) => {
+    e.preventDefault()
+    if (!otpGenerated) {
+      setOtpGenerated((otpGenerated) => !otpGenerated)
+      sendOTP()
+    }
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      let { status } = await verifyOTP({ username, otp })
+      if (status === 201) {
+        toast.success('OTP Verified Successfully!')
+        return navigate('/reset')
+      }
+    } catch (error) {
+      return toast.error('Invalid OTP!, Check email again.')
+    }
+  }
 
   return (
     <div className="container mx-auto">
@@ -13,32 +54,52 @@ export default function Recovery() {
           <div className="title flex flex-col items-center">
             <h4 className="text-5xl font-bold">Recovery</h4>
             <span className="py-4 text-xl w-2/3 text-center text-gray-500">
-              Enter OTP to recover password.
+              {otpGenerated
+                ? 'Enter OTP to recover password.'
+                : 'Generate OTP and verify it to reset the password.'}
             </span>
           </div>
 
           <form className="pt-10">
             <div className="textbox flex flex-col items-center justify-center gap-6">
-              <span className="py-4 text-sm text-left text-gray-500">
-                Enter 6 Digit OTP sent to your email address.
+              <span className="py-4 text-left text-gray-500">
+                {otpGenerated
+                  ? 'Enter 6 Digit OTP sent to your email address.'
+                  : 'The OTP will be sent to your registered email.'}
               </span>
               <input
                 className="textbox-input"
-                type="number"
+                type="text"
                 placeholder="OTP"
+                onChange={(e) => setOtp(e.target.value)}
+                disabled={!otpGenerated}
               />
-              <button className="btn" type="submit">
-                Sign In
-              </button>
-            </div>
-
-            <div className="text-center py-2">
-              <span>
-                Can't Get OTP?{' '}
-                <button className="text-green-600 ">Resend</button>
-              </span>
+              {otpGenerated ? (
+                <button className="btn" onClick={onSubmit}>
+                  Verify OTP
+                </button>
+              ) : (
+                <button className="btn" onClick={sendFirstOTP}>
+                  Generate OTP
+                </button>
+              )}
             </div>
           </form>
+
+          <div className="text-center py-2">
+            {otpGenerated ? (
+              <span>
+                Can't Get OTP?{' '}
+                <button className="text-green-600 " onClick={sendOTP}>
+                  Resend
+                </button>
+              </span>
+            ) : (
+              <span className="text-red-500">
+                Don't refresh or leave the Page.
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>

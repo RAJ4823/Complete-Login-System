@@ -170,12 +170,11 @@ export async function verifyOTP(req, res) {
 }
 
 // successfully redirect user when OTP is valid
-/** GET: http://localhost:8080/api/createResetSession */
+/** GET: http://localhost:8080/api/create-reset-session */
 export async function createResetSession(req, res) {
     try {
         if (req.app.locals.resetSession) {
-            req.app.locals.resetSession = false; // allow access to this route only once
-            return res.status(201).send({ msg: 'Access granted!' });
+            return res.status(201).send({ msg: 'Access granted!', flag: req.app.locals.resetSession });
         } else {
             return res.status(440).send({ error: 'Session expired!' });
         }

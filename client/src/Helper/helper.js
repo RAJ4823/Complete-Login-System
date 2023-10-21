@@ -4,8 +4,8 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_DOMAIN;
 
 export async function getUsername() {
     const token = localStorage.getItem('token');
-    if(!token) {
-        return Promise.reject("Cannot find the Token...!");
+    if (!token) {
+        return Promise.reject('Cannot find the Token...!');
     }
     const decodedToken = jwt_decode(token);
     return decodedToken;
@@ -32,7 +32,7 @@ export async function register(credentials) {
                 subject: message,
                 mailType: 'registerMail',
             };
-            await axios.post('/api/send-mail', mailData);
+            // await axios.post('/api/send-mail', mailData);
             return Promise.resolve({ message });
         } else {
             throw new Error('Registration Failed...!');
@@ -53,8 +53,8 @@ export async function login(credentials) {
 
 export async function getUser({ username }) {
     try {
-        let { data } = await axios.get(`/api/get-user/${username}`);
-        return { data };
+        let { data } = await axios.get(`/api/user/${username}`);
+        return data;
     } catch (e) {
         return { error: "Couldn't Fetch the user data...!", e };
     }
@@ -71,26 +71,24 @@ export async function updateUser(credentials) {
     }
 }
 
-export async function generateOTP({ username }) {
+export async function generateOTP(username) {
     try {
-        const { data, status } = await axios.get(`/api/generate-otp`, { params: { username } });
-        const OTP = { data };
+        let { data, status } = await axios.get(`/api/generate-otp`, { params: { username } });
 
         // Send OTP mail
         if (status === 201) {
-            const { data } = await getUser({ username });
-            message = 'Registered Successfully!';
+            let { email } = await getUser({ username });
             const mailData = {
                 username: username,
-                userEmail: data.email,
-                subject: message,
+                userEmail: email,
+                subject: 'Password Recovery OTP',
                 mailType: 'otpMail',
-                otp: OTP,
+                otp: data?.OTP,
             };
-            await axios.post('/api/send-mail', mailData);
+            // await axios.post('/api/send-mail', mailData);
         }
 
-        return Promise.resolve({ OTP });
+        return Promise.resolve(data?.OTP);
     } catch (e) {
         return Promise.reject({ error: "Couldn't genreate the OTP...!", e });
     }
@@ -99,7 +97,7 @@ export async function generateOTP({ username }) {
 export async function verifyOTP(credentials) {
     try {
         const { data, status } = await axios.get(`/api/verify-otp`, { params: credentials });
-        return Promise.resolve({ data, status });
+        return { data, status };
     } catch (e) {
         return Promise.reject({ error: 'OTP Verification Failed...!', e });
     }

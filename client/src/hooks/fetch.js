@@ -20,12 +20,11 @@ export default function useFetch(query) {
 
                 if (status === 201) {
                     setData((prev) => ({ ...prev, isLoading: false }));
-                    setData((prev) => ({ ...prev, apiData: data, status: status }));
                 }
-
-                setData((prev) => ({ ...prev, isLoading: false }));
-            } catch (e) {
-                setData((prev) => ({ ...prev, isLoading: false, error: e }));
+                setData((prev) => ({ ...prev, status, apiData: data }));
+            } catch (error) {
+                const status = error?.response?.status;
+                setData((prev) => ({ ...prev, status, error, isLoading: false }));
             }
         };
         fetch();

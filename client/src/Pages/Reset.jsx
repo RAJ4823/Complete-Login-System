@@ -1,22 +1,61 @@
 import React from 'react'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { useFormik } from 'formik'
 import { resetPasswordValidation } from '../Helper/Validate'
+import { resetPassword } from '../Helper/helper'
+import { useAuthStore } from '../Helper/store'
+import { Navigate, useNavigate } from 'react-router-dom'
 import '../Styles/card.css'
+import useFetch from '../hooks/fetch'
 
 export default function Password() {
+  const { username } = useAuthStore((state) => state.auth)
+  const [{ isLoading, error, status }] = useFetch('create-reset-session')
+  const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: {
-      password: 'admin@123',
-      confirm_password: 'admin@123',
+      password: '',
+      confirm_password: '',
     },
+
     validate: resetPasswordValidation,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values) => {
-      console.log(values);
+
+    onSubmit: async ({ password }) => {
+      const resetPromise = resetPassword({ username, password })
+      toast.promise(resetPromise, {
+        loading: 'Resetting the Password...',
+        success: <b>Password Reset Successfully...!</b>,
+        error: <b>Could not reset the password...!</b>,
+      })
+      resetPromise.then(() => {
+        navigate('/password')
+      })
     },
   })
+
+  if (status && status !== 201) {
+    return <Navigate to={'/'} replace={true}></Navigate>
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center flex-col">
+        <h1 className="text-2xl font-bold text-blue-500">Loading...</h1>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center flex-col">
+        <h1 className="text-2xl font-bold text-red-500">Server Error</h1>
+        <p>{error?.message}</p>
+      </div>
+    )
+  }
 
   return (
     <div className="container mx-auto">
