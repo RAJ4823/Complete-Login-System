@@ -1,0 +1,29 @@
+{
+    "name": "login-system",
+    "version": "1.0.0",
+    "description": "MERN Stack Login System ",
+    "main": "index.js",
+    "scripts": {
+        "install-server": "cd server && npm install",
+        "start-server": "cd server && npm start",
+        "install-client": "cd client && npm install",
+        "build-client": "cd client && npm run build",
+        "start-client": "cd client && npm start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RAJ4823/Complete-Login-System.git"
+    },
+    "keywords": [
+        "MERN",
+        "Stack",
+        "Login",
+        "System"
+    ],
+    "author": "RAJ PATEL (RAJ4823)",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/RAJ4823/Complete-Login-System/issues"
+    },
+    "homepage": "https://github.com/RAJ4823/Complete-Login-System#readme"
+}
