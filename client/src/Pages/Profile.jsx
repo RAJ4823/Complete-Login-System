@@ -147,7 +147,7 @@ export default function Register() {
           <div className="text-center py-4">
             <span className="text-gray-500">
               Come back later?{' '}
-              <button onClick={onLogout} className="text-red-500">
+              <button onClick={onLogout} className="text-red-500 link">
                 Logout
               </button>
             </span>

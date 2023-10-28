@@ -58,8 +58,8 @@ export default function Login() {
 
             <div className="text-center py-2">
               <span>
-                Not a member{' '}
-                <Link to="/register" className="text-blue-500">
+                Not a member,{' '}
+                <Link to="/register" className="text-blue-500 link">
                   Register Now
                 </Link>
               </span>

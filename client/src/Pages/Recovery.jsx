@@ -99,7 +99,7 @@ export default function Recovery() {
             {otpGenerated ? (
               <span>
                 Can't Get OTP?{' '}
-                <button className="text-green-600 " onClick={sendOTP}>
+                <button className="text-green-600 link" onClick={sendOTP}>
                   Resend
                 </button>
               </span>

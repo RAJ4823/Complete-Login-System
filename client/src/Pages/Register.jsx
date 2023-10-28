@@ -34,7 +34,7 @@ export default function Register() {
       })
 
       registerPromise.then(() => navigate('/'))
-    }, 
+    },
   })
 
   const onUpload = async (ele) => {
@@ -60,13 +60,14 @@ export default function Register() {
               <label htmlFor="profile">
                 <img
                   src={file || profileIcon}
-                  className="profile-img"
+                  className="profile-img cursor-pointer"
                   alt="avatar"
                 />
               </label>
 
               <input
                 onChange={onUpload}
+                accept=".jpg, .png, .jpeg"
                 type="file"
                 id="profile"
                 name="profile"
@@ -98,9 +99,9 @@ export default function Register() {
             </div>
 
             <div className="text-center py-4">
-              <span className="text-gray-500">
+              <span>
                 Already Register?{' '}
-                <Link className="text-blue-500" to="/">
+                <Link className="text-blue-500 link" to="/">
                   Login Now
                 </Link>
               </span>

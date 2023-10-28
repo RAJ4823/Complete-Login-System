@@ -1,7 +1,8 @@
 .glass {
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-  box-shadow: 0 4px 30px #4747470b;
+  /* box-shadow: 0 4px 30px #4747470b; */
+  box-shadow: 0 4px 30px #001e8c3d;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: max(50%, 600px);
@@ -17,7 +18,7 @@
 }
 
 .profile-img {
-  @apply border-4 border-gray-100 w-[135px] rounded-full shadow-lg cursor-pointer;
+  @apply border-4 border-gray-100 w-[135px] rounded-full shadow-lg;
   @apply hover:border-gray-200;
 }
 
@@ -48,11 +49,24 @@
 
 .btn {
   background-color: rgb(74, 113, 255) !important;
+  transition: 0.3s;
   @apply border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-50 text-lg shadow-sm text-center;
 }
 
 .btn:hover {
-  background-color: #ff6a6a !important;
+  background-color: #005bff70 !important;
+}
+
+.link {
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.link:active {
+    text-underline-offset: 3px;
 }
 
 input[type='file'] {
