@@ -120,6 +120,12 @@ Getting Started
 - Purpose: Generate one-time passwords (OTPs), often used for two-factor authentication (2FA).
 - Usage: Generate OTPs for secure user authentication.
 
+## Deployment
+The front-end and back-end of this project are both deployed on [Render.com](https://render.com).
+
+- Site Link: [Complete Login System](https://login-system-raj4823.onrender.com)
+
+
 ## Author
 ###### Raj Patel ([RAJ4823](https://github.com/RAJ4823 "RAJ4823"))
 

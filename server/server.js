@@ -15,7 +15,7 @@ const PORT = process.env.PORT || '8080';
 // Middlewares
 app.use(express.json());
 app.use(cors({
-    origin: 'https://complete-login-system-site.onrender.com/'
+    origin: 'https://login-system-raj4823.onrender.com'
 }));
 app.use(morgan('tiny'));
 app.disable('x-powered-by');

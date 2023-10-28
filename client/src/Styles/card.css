@@ -88,7 +88,10 @@ input[type='file'] {
 
 @media (max-width: 720px) {
   .glass {
-    width: 95%;
+    width: 95% !important;
+  }
+  .glass.profile-page {
+    width: 95% !important;
   }
 
   .otp-input {
