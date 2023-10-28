@@ -20,9 +20,6 @@ export default function Recovery() {
       success: <b>OTP has been send to your email.</b>,
       error: <b>Problem while generating OTP...!</b>,
     })
-    sendPromise.then((OTP) => {
-      console.log(OTP)
-    })
   }
 
   const sendFirstOTP = (e) => {
@@ -56,16 +53,16 @@ export default function Recovery() {
             <h4 className="text-4xl font-bold">Recovery</h4>
             <span className="py-2 text-lg w-2/3 text-center text-gray-500">
               {otpGenerated
-                ? 'Enter OTP to recover password.'
+                ? 'Verify OTP to recover the password.'
                 : 'Generate OTP and verify it to reset the password.'}
             </span>
           </div>
 
           <form className="pt-5">
             <div className="textbox flex flex-col items-center justify-center gap-6">
-              <span className="py-4 text-left text-gray-500">
+              <span className="py-4 text-left text-blue-700">
                 {otpGenerated
-                  ? 'Enter 6 Digit OTP sent to your email address.'
+                  ? 'Enter 6 Digit OTP sent to your registered email.'
                   : 'The OTP will be sent to your registered email.'}
               </span>
               <OtpInput

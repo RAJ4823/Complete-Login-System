@@ -14,9 +14,10 @@ export default function Register() {
 
   const formik = useFormik({
     initialValues: {
-      email: 'the_247@superverse.com',
-      username: 'the_247',
-      password: 'admin@123',
+      email: '',
+      username: '',
+      password: '',
+      confirm_password: ''
     },
 
     validate: registerValidation,
@@ -38,8 +39,11 @@ export default function Register() {
   })
 
   const onUpload = async (ele) => {
-    const base64 = await convertToBase64(ele.target.files[0])
-    setFile(base64)
+    const uploadedImage = ele.target.files[0]
+    if (uploadedImage) {
+      const convertPromise = convertToBase64(uploadedImage)
+      convertPromise.then((base64Image) => setFile(base64Image))
+    }
   }
 
   return (
@@ -56,7 +60,7 @@ export default function Register() {
           </div>
 
           <form className="py-1" onSubmit={formik.handleSubmit}>
-            <div className="profile flex justify-center py-4">
+            <div className="profile flex justify-center">
               <label htmlFor="profile">
                 <img
                   src={file || profileIcon}
@@ -79,19 +83,26 @@ export default function Register() {
                 {...formik.getFieldProps('email')}
                 className="textbox-input"
                 type="text"
-                placeholder="Email*"
+                placeholder="Email*    (Ex. user123@email.com)"
               />
               <input
                 {...formik.getFieldProps('username')}
                 className="textbox-input"
                 type="text"
-                placeholder="Username*"
+                placeholder="Username*    (Ex. User_123)"
+                maxLength="32"
               />
               <input
                 {...formik.getFieldProps('password')}
                 className="textbox-input"
-                type="text"
-                placeholder="Password*"
+                type="password"
+                placeholder="Create Password*"
+              />
+              <input
+                {...formik.getFieldProps('confirm_password')}
+                className="textbox-input"
+                type="password"
+                placeholder="Confirm Password*"
               />
               <button className="btn" type="submit">
                 Register

@@ -36,14 +36,22 @@ export default function Register() {
       toast.promise(updatePromise, {
         loading: 'Updating...',
         success: <b>Profile Update Successfully...!</b>,
-        error: <b>Could Not Update...!</b>,
+        error: <b>Could'nt Update the Profile...!</b>,
+      })
+
+      updatePromise.catch((err) => {
+        console.log(err)
+        setFile(null)
       })
     },
   })
 
   const onUpload = async (ele) => {
-    const base64 = await convertToBase64(ele.target.files[0])
-    setFile(base64)
+    const uploadedImage = ele.target.files[0]
+    if (uploadedImage) {
+      const convertPromise = convertToBase64(uploadedImage)
+      convertPromise.then((base64Image) => setFile(base64Image))
+    }
   }
 
   const onLogout = async () => {
@@ -75,7 +83,7 @@ export default function Register() {
       <Toaster position="top-center" reverseOrder={false}></Toaster>
 
       <div className="flex justify-center items-start h-full p-5">
-        <div className="glass h-full profile">
+        <div className="glass h-full profile-page">
           <div className="title flex flex-col items-center">
             <h4 className="text-3xl font-bold">Profile</h4>
             <span className="py-1 text-lg w-full text-center text-gray-500">
@@ -84,10 +92,10 @@ export default function Register() {
           </div>
 
           <form className="py-1" onSubmit={formik.handleSubmit}>
-            <div className="profile flex justify-center py-4">
+            <div className="profile flex justify-center">
               <label htmlFor="profile">
                 <img
-                  src={apiData?.profile || file || profileIcon}
+                  src={file || apiData?.profile || profileIcon}
                   className="profile-img w-40 cursor-pointer"
                   alt="avatar"
                 />
@@ -108,12 +116,14 @@ export default function Register() {
                   className="textbox-input w-3/4"
                   type="text"
                   placeholder="FirstName"
+                  maxLength="32"
                 />
                 <input
                   {...formik.getFieldProps('lastName')}
                   className="textbox-input w-3/4"
                   type="text"
                   placeholder="LastName"
+                  maxLength="32"
                 />
               </div>
 
@@ -123,6 +133,7 @@ export default function Register() {
                   className="textbox-input w-3/4"
                   type="text"
                   placeholder="Mobile No."
+                  maxLength="16"
                 />
                 <input
                   {...formik.getFieldProps('email')}

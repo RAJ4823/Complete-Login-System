@@ -71,11 +71,11 @@ export default function Password() {
           </div>
 
           <form onSubmit={formik.handleSubmit} className="py1">
-            <div className="profile justify-center items-center py-4">
+            <div className="profile justify-center items-center">
               <img
                 src={apiData?.profile || profileIcon}
                 alt="avatar"
-                className="profile-img mx-auto"
+                className="profile-img"
               />
             </div>
 

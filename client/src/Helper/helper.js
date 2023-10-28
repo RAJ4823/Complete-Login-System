@@ -32,7 +32,7 @@ export async function register(credentials) {
                 subject: message,
                 mailType: 'registerMail',
             };
-            // await axios.post('/api/send-mail', mailData);
+            await axios.post('/api/send-mail', mailData);
             return Promise.resolve({ message });
         } else {
             throw new Error('Registration Failed...!');
@@ -85,7 +85,7 @@ export async function generateOTP(username) {
                 mailType: 'otpMail',
                 otp: data?.OTP,
             };
-            // await axios.post('/api/send-mail', mailData);
+            await axios.post('/api/send-mail', mailData);
         }
 
         return Promise.resolve(data?.OTP);

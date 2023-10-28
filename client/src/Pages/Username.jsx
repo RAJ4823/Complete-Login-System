@@ -36,11 +36,11 @@ export default function Login() {
           </div>
 
           <form onSubmit={formik.handleSubmit} className="py1">
-            <div className="profile justify-center items-center py-4">
+            <div className="profile justify-center items-center">
               <img
                 src={profileIcon}
                 alt="avatar"
-                className="profile-img mx-auto"
+                className="profile-img"
               />
             </div>
 
@@ -50,6 +50,7 @@ export default function Login() {
                 className="textbox-input"
                 type="text"
                 placeholder="username"
+                maxLength="32"
               />
               <button className="btn" type="submit">
                 Let's Go

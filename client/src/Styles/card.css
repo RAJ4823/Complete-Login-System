@@ -7,19 +7,32 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: max(50%, 600px);
   min-width: max-content;
-  margin-top: 20px;
+  margin-top: 5px;
   @apply h-max border-4 border-gray-50 shrink-0 rounded-3xl py-10 px-2;
 }
 
-.glass.profile {
-  margin-top: 0px;
-  width: min(80%, 700px) !important;
-  @apply py-5 px-2;
+.profile {
+  border-color: #4a71ff;
+  transition: all 0.3s;
+  @apply border-4 w-[135px] h-[135px] rounded-full shadow-lg hover:border-blue-900 my-5 mx-auto;
 }
 
-.profile-img {
-  @apply border-4 border-gray-100 w-[135px] rounded-full shadow-lg;
-  @apply hover:border-gray-200;
+.glass.profile-page {
+  margin-top: 0px;
+  width: min(80%, 700px) !important;
+}
+
+.profile label {
+  width: 100%;
+  height: 100%;
+}
+
+.profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  padding: 3px;
 }
 
 .textbox-input {
@@ -48,25 +61,25 @@
 }
 
 .btn {
-  background-color: rgb(74, 113, 255) !important;
+  background-color: #4a71ff !important;
   transition: 0.3s;
   @apply border bg-indigo-500 w-3/4 py-4 rounded-lg text-gray-50 text-lg shadow-sm text-center;
 }
 
 .btn:hover {
-  background-color: #005bff70 !important;
+  background-color: #003aa7 !important;
 }
 
 .link {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .link:active {
-    text-underline-offset: 3px;
+  text-underline-offset: 3px;
 }
 
 input[type='file'] {
@@ -100,7 +113,6 @@ input[type='file'] {
     width: 85% !important;
   }
 }
-
 
 @media (max-width: 420px) {
   .otp-input {

@@ -77,18 +77,21 @@ export default function Password() {
               <input
                 {...formik.getFieldProps('password')}
                 className="textbox-input"
-                type="text"
+                type="password"
                 placeholder="New Password"
               />
               <input
                 {...formik.getFieldProps('confirm_password')}
                 className="textbox-input"
-                type="text"
-                placeholder="Repeat Password"
+                type="password"
+                placeholder="Confirm Password"
               />
               <button className="btn" type="submit">
                 Reset
               </button>
+              <span className="text-red-500">
+                Don't refresh or leave the Page.
+              </span>
             </div>
           </form>
         </div>

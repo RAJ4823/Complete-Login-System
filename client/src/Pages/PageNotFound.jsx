@@ -8,8 +8,8 @@ export default function PageNotFound() {
         <div className="glass" style={{ width: '50%' }}>
           <div className="title flex flex-col items-center">
             <h3 className="text-9xl font-bold">404</h3>
-            <h4 className="text-3xl font-bold">Page Not Found</h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+            <h4 className="text-2xl font-bold">Page Not Found</h4>
+            <span className="py-4 text-base w-2/3 text-center text-gray-500">
               Go back to Login / Register Page
             </span>
           </div>
