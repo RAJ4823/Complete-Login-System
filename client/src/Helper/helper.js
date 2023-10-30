@@ -13,9 +13,13 @@ export async function getUsername() {
 
 export async function authenticate(username) {
     try {
-        return await axios.post('/api/authenticate', { username });
-    } catch (err) {
-        return { error: 'Username not found...!', err };
+        const { status } = await axios.post('/api/authenticate', { username });
+        if (status !== 200) {
+            throw new Error({ message: 'Username not Found...!' });
+        }
+        return Promise.resolve({ message: 'Username found successfully.' });
+    } catch (error) {
+        return Promise.reject({ error });
     }
 }
 

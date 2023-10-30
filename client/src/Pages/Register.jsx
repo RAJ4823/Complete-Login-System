@@ -50,7 +50,7 @@ export default function Register() {
     <div className="container mx-auto">
       <Toaster position="top-center" reverseOrder={false}></Toaster>
 
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center h-full py-5 px-1">
         <div className="glass">
           <div className="title flex flex-col items-center">
             <h4 className="text-4xl font-bold">Register</h4>

@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { useFormik } from 'formik'
 import { usernameValidate } from '../Helper/Validate'
 import { useAuthStore } from '../Helper/store'
+import { authenticate } from '../Helper/helper'
 import profileIcon from '/img/profile.png'
 import '../Styles/card.css'
 
@@ -16,9 +17,22 @@ export default function Login() {
     validate: usernameValidate,
     validateOnBlur: false,
     validateOnChange: false,
+
     onSubmit: async (values) => {
-      setUsername(values.username)
-      navigate('/password')
+      const authPromise = authenticate(values.username)
+
+      toast.promise(authPromise, {
+        loading: 'Fetching username...',
+        success: (res) => {
+          setUsername(values.username)
+          navigate('/password')
+          return 'Username Found Successfully.'
+        },
+        error: (err) => {
+          navigate('/')
+          return 'Username does not exists...!'
+        },
+      })
     },
   })
 
@@ -37,11 +51,7 @@ export default function Login() {
 
           <form onSubmit={formik.handleSubmit} className="py1">
             <div className="profile justify-center items-center">
-              <img
-                src={profileIcon}
-                alt="avatar"
-                className="profile-img"
-              />
+              <img src={profileIcon} alt="avatar" className="profile-img" />
             </div>
 
             <div className="textbox flex flex-col items-center justify-center gap-6">
