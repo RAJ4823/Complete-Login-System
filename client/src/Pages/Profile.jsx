@@ -36,13 +36,13 @@ export default function Register() {
       toast.promise(updatePromise, {
         loading: 'Updating...',
         success: <b>Profile Update Successfully...!</b>,
-        error: <b>Could'nt Update the Profile...!</b>,
+        error: (err) => {
+          setFile(null)
+          return <b>{err.message || "Could'nt Update the Profile...!"}</b>
+        },
       })
 
-      updatePromise.catch((err) => {
-        console.log(err)
-        setFile(null)
-      })
+      updatePromise.catch((err) => {})
     },
   })
 

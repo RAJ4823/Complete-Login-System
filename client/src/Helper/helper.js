@@ -71,8 +71,9 @@ export async function updateUser(credentials) {
         const { data } = await axios.put('api/update-user', credentials, { headers: { Authorization: `Bearer ${token}` } });
 
         return Promise.resolve({ data });
-    } catch (e) {
-        return Promise.reject({ error: "Couldn't Update the Profile...!", e });
+    } catch (err) {
+        let message = err?.response?.data?.error;
+        return Promise.reject({ err, message });
     }
 }
 

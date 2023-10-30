@@ -38,8 +38,8 @@ export default function Register() {
           return <b>{err.message || 'Could Not Register...!'}</b>
         },
       })
-      
-      registerPromise.catch(err);
+
+      registerPromise.catch((err) => {})
     },
   })
 

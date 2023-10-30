@@ -126,11 +126,26 @@ export async function updateUser(req, res) {
         const { userId } = req.user;
         if (userId) {
             const newData = req.body;
-            UserModel.updateOne({ _id: userId }, newData)
-                .then((data) => res.status(201).send({ msg: 'User Data Updated' }))
-                .catch((err) => res.status(500).send({ error: 'User Not Found' }));
+            const { email } = newData;
+
+            // check email exists
+            const isEmailExists = new Promise((resolve, reject) => {
+                UserModel.findOne({ email, _id: { $ne: userId } })
+                    .then((data) => (data ? reject({ error: 'Email already registered...!' }) : resolve()))
+                    .catch((err) => reject({ isEmailExistsError: err }));
+            });
+
+            isEmailExists
+                .then(() => {
+                    UserModel.updateOne({ _id: userId }, newData)
+                        .then((data) => res.status(201).send({ msg: 'User Data Updated' }))
+                        .catch((err) => res.status(500).send({ error: "Could'nt Update the Profile...!", err }));
+                })
+                .catch((err) => {
+                    res.status(500).send(err);
+                });
         } else {
-            return res.status(404).send({ error: 'Invalid ID' });
+            return res.status(404).send({ error: 'Invalid User Id...!' });
         }
     } catch (err) {
         return res.status(401).send(err);
