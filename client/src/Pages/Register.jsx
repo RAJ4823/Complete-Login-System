@@ -17,7 +17,7 @@ export default function Register() {
       email: '',
       username: '',
       password: '',
-      confirm_password: ''
+      confirm_password: '',
     },
 
     validate: registerValidation,
@@ -30,11 +30,16 @@ export default function Register() {
 
       toast.promise(registerPromise, {
         loading: 'Creating...',
-        success: <b>Registred Successfully...!</b>,
-        error: <b>Could Not Register...!</b>,
+        success: (res) => {
+          navigate('/')
+          return <b>Registered Successfully</b>
+        },
+        error: (err) => {
+          return <b>{err.message || 'Could Not Register...!'}</b>
+        },
       })
-
-      registerPromise.then(() => navigate('/'))
+      
+      registerPromise.catch(err);
     },
   })
 

@@ -24,14 +24,14 @@ export async function register(req, res) {
         // check username exists
         const isUsernameExist = new Promise((resolve, reject) => {
             UserModel.findOne({ username })
-                .then((data) => (data ? reject({ error: 'Please use unique username' }) : resolve()))
+                .then((data) => (data ? reject({ error: 'Username already exists...!' }) : resolve()))
                 .catch((err) => reject({ isUsernameExist: err }));
         });
 
         // check email exists
         const isEmailExists = new Promise((resolve, reject) => {
             UserModel.findOne({ email })
-                .then((data) => (data ? reject({ error: 'Please use unique email' }) : resolve()))
+                .then((data) => (data ? reject({ error: 'Email already registered...!' }) : resolve()))
                 .catch((err) => reject({ isEmailExistsError: err }));
         });
 
@@ -47,8 +47,8 @@ export async function register(req, res) {
                         });
 
                         user.save()
-                            .then(() => res.status(201).send({ msg: 'User Registered Successfully' }))
-                            .catch(() => res.status(500).send({ error: 'User Registration Failed' }));
+                            .then(() => res.status(201).send({ msg: 'User Registered Successfully.' }))
+                            .catch(() => res.status(500).send({ error: 'User Registration Failed...!' }));
                     })
                     .catch((err) => {
                         res.status(500).send(err);

@@ -41,8 +41,9 @@ export async function register(credentials) {
         } else {
             throw new Error('Registration Failed...!');
         }
-    } catch (error) {
-        return Promise.reject({ error });
+    } catch (err) {
+        let message = err?.response?.data?.error;
+        return Promise.reject({ err, message });
     }
 }
 

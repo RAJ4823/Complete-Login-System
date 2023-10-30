@@ -14,9 +14,10 @@ const PORT = process.env.PORT || '8080';
 
 // Middlewares
 app.use(express.json());
-app.use(cors({
-    origin: 'https://login-system-raj4823.onrender.com'
-}));
+// app.use(cors({
+//     origin: 'https://login-system-raj4823.onrender.com'
+// }));
+app.use(cors());
 app.use(morgan('tiny'));
 app.disable('x-powered-by');
 
